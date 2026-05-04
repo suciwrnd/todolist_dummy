@@ -1,13 +1,12 @@
-/* Base Variables (Eye-Catching Premium Theme) */
 :root {
   --bg-dark: #0f0f1a; 
-  --bg-card: #151520; /* Fixed: Added back missing card background */
-  --accent-color: #dcf516; /* Bright Yellow-Green */
+  --bg-card: #151520; 
+  --accent-color: #dcf516; 
   --accent-hover: #eaff4d;
   --text-primary: #ffffff;
   --text-secondary: #a0a0b0;
-  --danger-color: #9d1f1a; /* Deep Crimson for Boss */
-  --danger-glow: #ff4d4d; /* Brighter red for text glows */
+  --danger-color: #9d1f1a; 
+  --danger-glow: #ff4d4d; 
   --success-color: #00e676; 
   --info-color: #00e5ff; 
   --warning-color: #ffea00; 
@@ -23,7 +22,6 @@ body {
   min-height: 100vh;
 }
 
-/* Typography & Links */
 a {
   color: var(--accent-color);
   text-decoration: none;
@@ -40,12 +38,11 @@ h1, h2, h3, h4, h5 {
   text-transform: uppercase;
 }
 
-/* Bootstrap Overrides */
 .text-warning { color: var(--accent-color) !important; text-shadow: 0 0 10px rgba(220, 245, 22, 0.4); }
 .text-danger { color: var(--danger-glow) !important; text-shadow: 0 0 10px rgba(255, 77, 77, 0.5); }
 .text-info { color: var(--info-color) !important; text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); }
 
-/* Custom Cards & Modals (Glassmorphism + Depth) */
+
 .card-custom, .modal-content {
   background: linear-gradient(145deg, rgba(30, 30, 40, 0.95) 0%, rgba(15, 15, 20, 1) 100%);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -64,7 +61,6 @@ h1, h2, h3, h4, h5 {
   transform: translateY(-2px);
 }
 
-/* Specific Modal Header/Footer fixes */
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -72,7 +68,6 @@ h1, h2, h3, h4, h5 {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Custom Buttons */
 .btn-accent {
   background: linear-gradient(45deg, #b8cc12, var(--accent-color));
   color: #000;
@@ -93,7 +88,6 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 6px 20px rgba(220, 245, 22, 0.6);
 }
 
-/* Inputs */
 .form-control-custom, .form-select {
   background-color: #2a2a2a;
   border: 1px solid var(--border-color);
@@ -102,7 +96,7 @@ h1, h2, h3, h4, h5 {
 
 .form-control-custom::placeholder {
   color: rgba(255, 255, 255, 0.4);
-  opacity: 1; /* Fix for Firefox */
+  opacity: 1; 
 }
 
 .form-control-custom:focus {
@@ -112,7 +106,6 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 0 0.25rem rgba(196, 211, 0, 0.25);
 }
 
-/* Progress Bars */
 .progress {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
@@ -141,7 +134,6 @@ h1, h2, h3, h4, h5 {
   transition: width 0.5s ease-in-out;
 }
 
-/* Mascot & Messages */
 .mascot-container {
   display: flex;
   align-items: center;
@@ -175,7 +167,6 @@ h1, h2, h3, h4, h5 {
   border-color: transparent var(--accent-color) transparent transparent;
 }
 
-/* Boss Arena */
 .boss-arena {
   text-align: center;
   padding: 30px;
@@ -188,7 +179,6 @@ h1, h2, h3, h4, h5 {
   transition: all 0.3s;
 }
 
-/* Tasks */
 .task-item {
   background: rgba(25, 25, 35, 0.6);
   border: 1px solid rgba(255,255,255,0.05);
@@ -214,7 +204,6 @@ h1, h2, h3, h4, h5 {
 .badge-rank-e { background: linear-gradient(45deg, #0099cc, #00e5ff); color: #000; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
 .badge-category { background-color: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
 
-/* Checklist Button Glowing Effect */
 .btn-checklist {
   background: transparent;
   border: 2px solid var(--text-secondary);
@@ -253,7 +242,6 @@ h1, h2, h3, h4, h5 {
   color: var(--text-secondary) !important;
 }
 
-/* Utilities */
 .border-accent { 
   border-top: 2px solid var(--accent-color) !important; 
   box-shadow: 0 0 25px rgba(220, 245, 22, 0.15), inset 0 1px 0 rgba(255,255,255,0.1) !important;
@@ -264,7 +252,6 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 40px rgba(157, 31, 26, 0.2), inset 0 0 20px rgba(157, 31, 26, 0.1) !important;
 }
 
-/* Slash Attack Animation */
 .slash-container {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -303,7 +290,6 @@ h1, h2, h3, h4, h5 {
   100% { transform: rotate(-45deg) scaleX(1) translateY(50px); opacity: 0; }
 }
 
-/* Navigation */
 .nav-pills .nav-link {
   color: var(--text-secondary);
   border-radius: 8px;
@@ -314,7 +300,6 @@ h1, h2, h3, h4, h5 {
   background-color: var(--accent-color);
 }
 
-/* Calendar Widget Simple */
 .calendar-widget {
   background-color: #2a2a2a;
   border-radius: 8px;
@@ -338,7 +323,6 @@ h1, h2, h3, h4, h5 {
   font-weight: bold;
 }
 
-/* Animations */
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
   10% { transform: translate(-1px, -2px) rotate(-1deg); }
