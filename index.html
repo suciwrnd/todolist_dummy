@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuestLog: Boss Raid Productivity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigasi Atas -->
+    <nav class="navbar navbar-dark bg-dark border-bottom border-secondary mb-4">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand text-white" href="#">
+                <i class="fa-solid fa-shield-halved text-warning me-2"
+                    style="color: var(--accent-color) !important;"></i>
+                <span class="fw-bold">QuestLog</span>
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="text-secondary me-3" id="playerUsername">Player</span>
+                <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+
+        <!-- bar statistik pemain -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card-custom p-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-shield-halved fs-3 text-warning"></i>
+                        <div class="text-white fw-bold fs-5" id="playerTitle">Petualang Pemula</div>
+                    </div>
+
+                    <div class="flex-grow-1 mx-md-4" style="min-width: 200px;">
+                        <div class="d-flex justify-content-between text-secondary small mb-1">
+                            <span>XP</span>
+                            <span id="playerXpText">0 / 100</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-xp" id="playerXpBar" role="progressbar"
+                                style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-1 mx-md-4" style="min-width: 200px;">
+                        <div class="d-flex justify-content-between text-secondary small mb-1">
+                            <span>Energy (HP)</span>
+                            <span id="playerHpText">100 / 100</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-energy" id="playerHpBar" role="progressbar"
+                                style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-coins text-warning fs-4"></i>
+                        <span class="fw-bold fs-4" id="playerGold" style="color: var(--accent-color);">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigasi -->
+        <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold px-4" id="pills-dashboard-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-dashboard" type="button" role="tab">
+                    <i class="fa-solid fa-chess-board me-2"></i> Dashboard
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4" id="pills-inventory-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-inventory" type="button" role="tab">
+                    <i class="fa-solid fa-box-open me-2"></i> Inventory
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4" id="pills-shop-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-shop" type="button" role="tab">
+                    <i class="fa-solid fa-store me-2"></i> Shop
+                </button>
+            </li>
+        </ul>
+
+        <!-- Konten Tab -->
+        <div class="tab-content" id="pills-tabContent">
+
+            <!-- dashboard -->
+            <div class="tab-pane fade show active fade-in" id="pills-dashboard" role="tabpanel">
+
+                <!-- quest board -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card-custom p-4 border-accent">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 class="mb-0 text-white"><i class="fa-solid fa-scroll me-2 text-warning"></i> Quest
+                                    Board</h3>
+                                <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#addQuestModal">
+                                    <i class="fa-solid fa-plus me-1"></i> New Quest
+                                </button>
+                            </div>
+
+                            <div id="questList" class="d-flex flex-column gap-2"
+                                style="max-height: 400px; overflow-y: auto;">
+                                <div class="text-center text-secondary py-4" id="emptyQuestMsg">
+                                    No active quests. Add a new quest to begin the raid!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- boss dialog  -->
+                <div class="row align-items-stretch g-4 mb-4">
+
+                    <!-- maskot  -->
+                    <div class="col-lg-3 d-flex flex-column gap-3">
+                        <div
+                            class="card-custom p-3 border-accent flex-grow-1 d-flex flex-column justify-content-center text-center">
+                            <i class="fa-solid fa-robot mascot-icon fs-1 mb-2"></i>
+                            <div class="mascot-message-simple fst-italic text-light small" id="mascotMessage">
+                                "Hero! Set deadlines and defeat the boss before time runs out!"
+                            </div>
+                        </div>
+                        <div class="calendar-widget flex-grow-1">
+                            <div class="fw-bold text-info mb-1" id="calendarMonth">Month YYYY</div>
+                            <div class="calendar-days text-secondary fw-bold" style="font-size: 0.75rem;">
+                                <div>Su</div>
+                                <div>Mo</div>
+                                <div>Tu</div>
+                                <div>We</div>
+                                <div>Th</div>
+                                <div>Fr</div>
+                                <div>Sa</div>
+                            </div>
+                            <div class="calendar-days" id="calendarGrid">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- boss -->
+                    <div class="col-lg-6">
+                        <div
+                            class="card-custom p-4 h-100 d-flex flex-column boss-card border-danger position-relative overflow-hidden">
+                            <h3 class="mb-4 text-center text-danger text-uppercase fw-bold"
+                                style="letter-spacing: 2px;"><i class="fa-solid fa-skull me-2"></i> Boss Area</h3>
+                            <div
+                                class="boss-arena flex-grow-1 d-flex flex-column justify-content-center align-items-center position-relative">
+
+                                <!-- Efek Tebasan  -->
+                                <div id="slashEffect" class="slash-container">
+                                    <div class="slash-line"></div>
+                                </div>
+
+                                <h4 class="text-white fw-bold mb-1" id="bossName">Abyssal Demon</h4>
+                                <div class="badge bg-danger mb-4 px-3 py-2">Level <span id="bossLevel">1</span> Threat
+                                </div>
+
+                                <img src="https://robohash.org/questlog_boss_1.png?set=set2&size=220x220" alt="Boss"
+                                    class="boss-image mb-4 floating-slow" id="bossImage"
+                                    style="width: 220px; height: 220px; filter: drop-shadow(0 0 35px rgba(255, 77, 77, 0.8));">
+
+                                <div class="w-100 px-4 mt-auto">
+                                    <div class="d-flex justify-content-between text-white fw-bold mb-2">
+                                        <span>BOSS HP</span>
+                                        <span id="bossHpText">500 / 500</span>
+                                    </div>
+                                    <div class="progress" style="height: 2rem;">
+                                        <div class="progress-bar progress-bar-hp progress-bar-striped progress-bar-animated"
+                                            id="bossHpBar" role="progressbar" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- dialog boss -->
+                    <div class="col-lg-3 d-flex flex-column gap-3">
+                        <div
+                            class="card-custom h-100 p-4 border-danger d-flex flex-column justify-content-center text-center">
+                            <i class="fa-solid fa-ghost fs-1 floating-slow mb-3"
+                                style="color: var(--danger-color);"></i>
+                            <h5 style="color: var(--danger-color);">Boss Taunt</h5>
+                            <div class="mascot-message-simple fst-italic small mt-2" id="bossDialogMessage"
+                                style="color: var(--danger-color);">
+                                "You think a mere to-do list can defeat me?! Your deadlines mean nothing!"
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- inventaris -->
+            <div class="tab-pane fade fade-in" id="pills-inventory" role="tabpanel">
+                <div class="card-custom p-4 min-vh-50">
+                    <h3 class="mb-4"><i class="fa-solid fa-sack-dollar me-2 text-warning"></i> Your Loot</h3>
+                    <div class="row g-3" id="inventoryList">
+                        <div class="col-12 text-center text-secondary py-5" id="emptyInventoryMsg">
+                            Your inventory is empty. Defeat bosses to earn loot boxes!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- toko-->
+            <div class="tab-pane fade fade-in" id="pills-shop" role="tabpanel">
+                <div class="card-custom p-4 min-vh-50">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3><i class="fa-solid fa-store me-2" style="color: var(--accent-color);"></i> Merchant</h3>
+                        <div class="badge bg-dark border border-secondary fs-6 p-2">
+                            Your Gold: <span class="text-accent fw-bold" id="shopGoldDisplay">0</span> <i
+                                class="fa-solid fa-coins text-accent"></i>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Item Toko 1 -->
+                        <div class="col-md-4">
+                            <div class="card-custom p-3 text-center border-secondary h-100 transition"
+                                style="background: #222;">
+                                <i class="fa-solid fa-flask text-success fs-1 mb-3 mt-2"></i>
+                                <h5>Minor Health Potion</h5>
+                                <p class="text-secondary small">Restores 20 Energy.</p>
+                                <div class="mt-auto pt-3">
+                                    <button class="btn btn-outline-success w-100"
+                                        onclick="buyItem('health_potion_minor', 50, 20)">
+                                        Buy - 50 <i class="fa-solid fa-coins text-warning"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Item Toko 2 -->
+                        <div class="col-md-4">
+                            <div class="card-custom p-3 text-center border-secondary h-100" style="background: #222;">
+                                <i class="fa-solid fa-flask text-danger fs-1 mb-3 mt-2"></i>
+                                <h5>Major Health Potion</h5>
+                                <p class="text-secondary small">Restores 50 Energy.</p>
+                                <div class="mt-auto pt-3">
+                                    <button class="btn btn-outline-success w-100"
+                                        onclick="buyItem('health_potion_major', 100, 50)">
+                                        Buy - 100 <i class="fa-solid fa-coins text-warning"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Tambah Quest -->
+    <div class="modal fade" id="addQuestModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content"
+                style="background-color: var(--bg-card); border-top: 4px solid var(--accent-color);">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title">Forge New Quest</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addQuestForm">
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">Quest Title</label>
+                            <input type="text" class="form-control form-control-custom" id="questTitle" required
+                                placeholder="e.g. Finish report">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">Difficulty Rank</label>
+                            <select class="form-select form-control-custom" id="questRank">
+                                <option value="E">Rank E (Easy) - Low XP/Dmg</option>
+                                <option value="C" selected>Rank C (Medium) - Normal XP/Dmg</option>
+                                <option value="S">Rank S (Hard) - High XP/Dmg</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">Quest Category</label>
+                            <select class="form-select form-control-custom" id="questCategory">
+                                <option value="Work">💼 Work</option>
+                                <option value="Study">📚 Study</option>
+                                <option value="Health">💖 Health</option>
+                                <option value="Chores">🧹 Chores</option>
+                                <option value="Other">✨ Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-secondary">Deadline (Date & Time)</label>
+                            <input type="datetime-local" class="form-control form-control-custom" id="questDeadline"
+                                required>
+                        </div>
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-accent ms-2">Add Quest</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loot Box -->
+    <div class="modal fade" id="victoryModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered text-center">
+            <div class="modal-content"
+                style="background: linear-gradient(145deg, rgba(30, 30, 40, 0.95) 0%, rgba(15, 15, 20, 1) 100%); border-top: 4px solid var(--warning-color); border-radius: 16px;">
+                <div class="modal-body p-5">
+                    <h2 class="text-warning mb-4" style="text-shadow: 0 0 20px rgba(220, 245, 22, 0.5);">BOSS DEFEATED!
+                    </h2>
+                    <i class="fa-solid fa-gift fs-1 text-danger mb-4 bounce" style="font-size: 5rem;"></i>
+                    <p class="text-white mb-4">You have slain the boss and found a Loot Box!</p>
+                    <button type="button" class="btn btn-accent px-4 py-2 fw-bold" onclick="openLootBox()">Open Loot
+                        Box</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- app logika script -->
+    <script src="assets/js/auth.js?v=2"></script>
+    <script src="assets/js/game.js?v=2"></script>
+    <script src="assets/js/quests.js?v=2"></script>
+    <script src="assets/js/main.js?v=2"></script>
+</body>
+
+</html>
